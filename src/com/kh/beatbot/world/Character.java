@@ -12,7 +12,7 @@ public abstract class Character {
 			parentHeight = Page.mainPage.height;
 	boolean touched = true;
 
-	public void applyGravity(float gravity) {
+	public void applyGravity(Position gravity) {
 		if (touched)
 			return;
 		if (position.y + size >= parentHeight || position.y - size <= 0) {
@@ -21,7 +21,7 @@ public abstract class Character {
 		if (position.x + size >= parentWidth || position.x - size <= 0){
 			velocity.x = - velocity.x;
 		}
-		velocity.y += gravity;
+		velocity.add(gravity);
 	}
 
 	public void applyDrag(float drag) {

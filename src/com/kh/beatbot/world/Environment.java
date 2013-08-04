@@ -8,9 +8,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.Log;
 
+import com.kh.beatbot.Position;
+
 public class Environment implements SensorEventListener {
 	private static List<Character> characters = new ArrayList<Character>();
-	private static float gravity = 1.1f, drag = 0.9f;
+	private static Position gravity = new Position(0, 0.9f);
+	private static float drag = 0.9f;
 	
 	public static void addCharacter(Character character) {
 		characters.add(character);
@@ -35,6 +38,9 @@ public class Environment implements SensorEventListener {
 			"Beatbot",
 			"Axis X: " + axisX + "; Axis Y: " + axisY + "; Axis Z: " + axisZ
 		);
+		
+		gravity.x = axisY;
+		gravity.y = axisX;
 	}
 
 	@Override
