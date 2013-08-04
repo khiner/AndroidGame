@@ -1,4 +1,4 @@
-package com.kh.beatbot.character;
+package com.kh.beatbot.world;
 
 import com.kh.beatbot.Position;
 import com.kh.beatbot.ui.color.Colors;

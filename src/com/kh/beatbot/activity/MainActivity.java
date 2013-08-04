@@ -3,8 +3,11 @@ package com.kh.beatbot.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -16,6 +19,7 @@ import com.kh.beatbot.ui.view.group.GLSurfaceViewGroup;
 import com.kh.beatbot.ui.view.group.ViewPager;
 import com.kh.beatbot.ui.view.page.MainPage;
 import com.kh.beatbot.ui.view.page.Page;
+import com.kh.beatbot.world.Environment;
 
 public class MainActivity extends Activity {
 	private static ViewPager activityPager;
@@ -24,7 +28,11 @@ public class MainActivity extends Activity {
 	public static final int MAIN_PAGE_NUM = 0;
 
 	public static final int EXIT_DIALOG_ID = 0;
-			
+
+	public SensorManager sensorMgr;
+	public Sensor sensorAccel;
+	public static Environment environment;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,10 @@ public class MainActivity extends Activity {
 		activityPager = new ViewPager();
 		activityPager.addPage(Page.mainPage);
 		activityPager.setPage(0);
+
+		sensorMgr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		sensorAccel = sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		environment = new Environment();
 
 		((GLSurfaceViewGroup) View.root).setBBRenderer(activityPager);
 	}
@@ -95,6 +107,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onPause() {
 		View.root.onPause();
+		sensorMgr.unregisterListener(environment);
 		super.onPause();
 	}
 
@@ -102,5 +115,10 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		View.root.onResume();
+		sensorMgr.registerListener(
+			environment,
+			sensorAccel,
+			SensorManager.SENSOR_DELAY_NORMAL
+		);
 	}
 }

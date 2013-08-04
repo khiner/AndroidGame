@@ -1,6 +1,6 @@
 package com.kh.beatbot.ui.view.page;
 
-import com.kh.beatbot.character.Character;
+import com.kh.beatbot.world.Character;
 import com.kh.beatbot.listener.OnReleaseListener;
 import com.kh.beatbot.ui.RoundedRectIcon;
 import com.kh.beatbot.ui.color.Colors;
