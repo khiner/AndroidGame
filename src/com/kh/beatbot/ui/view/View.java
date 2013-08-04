@@ -159,6 +159,8 @@ public abstract class View implements Comparable<View> {
 	}
 
 	public void drawAll() {
+		if (!initialized)
+			return;
 		// scissor ensures that each view can only draw within its rect
 		gl.glEnable(GL10.GL_SCISSOR_TEST);
 		if (parent != null) {
