@@ -1,20 +1,22 @@
 package com.kh.beatbot.ui.view.page;
 
-import com.kh.beatbot.world.Character;
 import com.kh.beatbot.listener.OnReleaseListener;
 import com.kh.beatbot.ui.RoundedRectIcon;
 import com.kh.beatbot.ui.color.Colors;
 import com.kh.beatbot.ui.view.control.Button;
 import com.kh.beatbot.ui.view.control.ImageButton;
+import com.kh.beatbot.world.Character;
+import com.kh.beatbot.world.CircleCharacter;
+import com.kh.beatbot.world.Environment;
 
 public class MainPage extends Page {
 	ImageButton startButton;
-	float colorTransitionRate = 30, gravity = 1.1f;
+	float colorTransitionRate = 30;
 	float[] currColor = new float[] { 1, 1, 1, 1 };
 	int frameCount = 0;
 	
 	Character character;
-
+	
 	@Override
 	public void update() {
 
@@ -26,7 +28,7 @@ public class MainPage extends Page {
 		startButton.setText("Start");
 		startButton.setBgIcon(new RoundedRectIcon(null, Colors.labelBgColorSet,
 				Colors.labelStrokeColorSet));
-
+		
 		startButton.setOnReleaseListener(new OnReleaseListener() {
 			@Override
 			public void onRelease(Button button) {
@@ -39,7 +41,8 @@ public class MainPage extends Page {
 
 	@Override
 	public void layoutChildren() {
-		character = new Character(height / 10);
+		character = new CircleCharacter(height / 10);
+		Environment.addCharacter(character);
 		startButton.layout(this, width / 2 - width / 8, height / 2 - height
 				/ 16, width / 4, height / 8);
 	}
@@ -49,8 +52,7 @@ public class MainPage extends Page {
 		currColor[1] = currColor[2] = (frameCount++ % colorTransitionRate)
 				/ colorTransitionRate;
 		setBackgroundColor(currColor);
-		character.applyGravity(gravity);
-		character.draw();
+		Environment.tick();
 	}
 
 	@Override
