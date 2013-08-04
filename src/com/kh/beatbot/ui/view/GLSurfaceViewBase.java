@@ -36,7 +36,6 @@ public abstract class GLSurfaceViewBase extends GLSurfaceView implements
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 	}
 
-	protected static boolean initialized = false;
 	protected static boolean running;
 	protected int width;
 	protected int height;
@@ -55,14 +54,9 @@ public abstract class GLSurfaceViewBase extends GLSurfaceView implements
 		gl = _gl;
 		gl.glViewport(0, 0, this.width, this.height);
 		GLU.gluOrtho2D(gl, 0, this.width, this.height, 0);
-		initGl(gl);
 		initGlText();
-		initialized = true;
+		initGl(gl);
 		init();
-	}
-
-	public static boolean isInitialized() {
-		return initialized;
 	}
 
 	public void onSurfaceCreated(GL10 _gl, EGLConfig config) {
@@ -92,15 +86,19 @@ public abstract class GLSurfaceViewBase extends GLSurfaceView implements
 	}
 
 	public static final void drawText(String text, int height, float x, float y) {
-		glText.draw(text, height, x, y);
+		if (glText != null) {
+			glText.draw(text, height, x, y);
+		}
 	}
 
 	public static final void storeText(String text) {
-		glText.storeText(text);
+		if (glText != null) {
+			glText.storeText(text);
+		}
 	}
 
 	public static final float getTextWidth(String text, float height) {
-		return glText.getTextWidth(text, height);
+		return glText != null ? glText.getTextWidth(text, height) : 0;
 	}
 
 	public static final void loadTexture(Bitmap bitmap, int[] textureHandlers,

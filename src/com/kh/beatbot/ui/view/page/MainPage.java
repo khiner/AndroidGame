@@ -23,9 +23,13 @@ public class MainPage extends Page {
 	}
 
 	@Override
+	public void loadIcons() {
+		startButton.setText("Start");
+	}
+	
+	@Override
 	public void createChildren() {
 		startButton = new ImageButton();
-		startButton.setText("Start");
 		startButton.setBgIcon(new RoundedRectIcon(null, Colors.labelBgColorSet,
 				Colors.labelStrokeColorSet));
 		
@@ -33,7 +37,8 @@ public class MainPage extends Page {
 			@Override
 			public void onRelease(Button button) {
 				removeChild(button);
-
+				character = new CircleCharacter(height / 10);
+				Environment.addCharacter(character);
 			}
 		});
 		addChild(startButton);
@@ -41,8 +46,6 @@ public class MainPage extends Page {
 
 	@Override
 	public void layoutChildren() {
-		character = new CircleCharacter(height / 10);
-		Environment.addCharacter(character);
 		startButton.layout(this, width / 2 - width / 8, height / 2 - height
 				/ 16, width / 4, height / 8);
 	}
@@ -57,16 +60,19 @@ public class MainPage extends Page {
 
 	@Override
 	public void handleActionMove(int id, float x, float y) {
-		character.moveTo(x, y);
+		if (character != null)
+			character.moveTo(x, y);
 	}
 	
 	@Override
 	public void handleActionUp(int id, float x, float y) {
-		character.drop();
+		if (character != null)
+			character.drop();
 	}
 	
 	@Override
 	public void handleActionDown(int id, float x, float y) {
-		character.pickUp();
+		if (character != null)
+			character.pickUp();
 	}
 }

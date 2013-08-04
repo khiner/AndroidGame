@@ -16,12 +16,14 @@ public class TextView extends View {
 	
 	@Override
 	public void init() {
-		initText();
 	}
 	
 	@Override
 	public void draw() {
-		drawText();
+		if (text == null || text.isEmpty())
+			return;
+		drawText(text, getStrokeColor(), (int) textHeight, textXOffset,
+				textYOffset);
 	}
 
 	@Override
@@ -36,22 +38,15 @@ public class TextView extends View {
 
 	@Override
 	protected void loadIcons() {
-
+		initText();
 	}
 	
 	protected float calcTextOffset() {
 		return width / 2 - textWidth / 2;
 	}
 	
-	private void drawText() {
-		if (text == null || text.isEmpty())
-			return;
-		drawText(text, getStrokeColor(), (int) textHeight, textXOffset,
-				textYOffset);
-	}
-	
 	private void initText() {
-		if (text.isEmpty() || !GLSurfaceViewBase.isInitialized()) {
+		if (text == null || text.isEmpty()) {
 			return;
 		}
 		GLSurfaceViewBase.storeText(text);

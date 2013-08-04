@@ -32,12 +32,7 @@ public class Environment implements SensorEventListener {
 	public void onSensorChanged(SensorEvent event) {
 		float axisX = event.values[0];
 		float axisY = event.values[1];
-		float axisZ = event.values[2];
-
-		Log.i(
-			"Beatbot",
-			"Axis X: " + axisX + "; Axis Y: " + axisY + "; Axis Z: " + axisZ
-		);
+		//float axisZ = event.values[2];
 		
 		gravity.x = axisY;
 		gravity.y = axisX;

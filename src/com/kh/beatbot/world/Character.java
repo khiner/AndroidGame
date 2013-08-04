@@ -10,7 +10,7 @@ public abstract class Character {
 	
 	static float parentWidth = Page.mainPage.width,
 			parentHeight = Page.mainPage.height;
-	boolean touched = true;
+	boolean touched = false;
 
 	public void applyGravity(Position gravity) {
 		if (touched)
