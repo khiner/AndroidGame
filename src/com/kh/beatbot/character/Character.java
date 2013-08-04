@@ -25,32 +25,23 @@ public class Character {
 	public void applyGravity(float gravity) {
 		if (touched)
 			return;
-		velocity.y += gravity;
-		if (position.y + size >= parentHeight) {
-			stop();
-		} else {
-			setPositionBounded(position.x + velocity.x, position.y + velocity.y);
+		if (position.y + size >= parentHeight || position.y - size <= 0) {
+			velocity.y = - velocity.y;
 		}
-	}
-
-	private void setPositionBounded(float x, float y) {
-		float newX = x < (Page.mainPage.width - size) ? (x > size ? x : size)
-				: (Page.mainPage.width - size);
-		float newY = y < (Page.mainPage.height - size) ? (y > size ? y : size)
-				: (Page.mainPage.height - size);
-		setPosition(newX, newY);
-	}
-
-	private void setPosition(float x, float y) {
-		position.set(x, y);
+		if (position.x + size >= parentWidth || position.x - size <= 0){
+			velocity.x = - velocity.x;
+		}
+		velocity.y += gravity;
+		position.set(position.x + velocity.x, position.y + velocity.y);
 	}
 
 	public void moveTo(float x, float y) {
 		long deltaTime = (System.currentTimeMillis() - position.timeInMillis) / 4;
-		velocity.set((x - position.x) / deltaTime, (y - position.y) / deltaTime);
-		setPositionBounded(x, y);
+		float newX = clipX(x), newY = clipY(y);
+		velocity.set((newX - position.x) / deltaTime, (newY - position.y) / deltaTime);
+		position.set(newX, newY);
 	}
-	
+
 	public void drop() {
 		touched = false;
 	}
@@ -62,6 +53,16 @@ public class Character {
 
 	public void draw() {
 		View.drawPoint(size, Colors.VOLUME, position.x, position.y);
+	}
+
+	private float clipX(float x) {
+		return x < (parentWidth - size) ? (x > size ? x : size)
+				: (parentWidth - size);
+	}
+
+	private float clipY(float y) {
+		return y < (parentHeight - size) ? (y > size ? y : size)
+				: (parentHeight - size);
 	}
 
 	private void stop() {
