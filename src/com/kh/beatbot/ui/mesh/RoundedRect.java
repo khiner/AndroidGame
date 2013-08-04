@@ -26,13 +26,13 @@ public class RoundedRect extends Shape {
 		float centerY = y + height / 2;
 		float lastX = 0, lastY = 0;
 		for (int i = 0; i < fillMesh.getNumVertices() / 3; i++) {
-			if (theta < ¹ / 2) { // lower right
+			if (theta < pi / 2) { // lower right
 				addX = width - cornerRadius;
 				addY = height - cornerRadius;
-			} else if (theta < ¹) { // lower left
+			} else if (theta < pi) { // lower left
 				addX = cornerRadius;
 				addY = height - cornerRadius;
-			} else if (theta < 3 * ¹ / 2) { // upper left
+			} else if (theta < 3 * pi / 2) { // upper left
 				addX = cornerRadius;
 				addY = cornerRadius;
 			} else { // upper right
@@ -52,7 +52,7 @@ public class RoundedRect extends Shape {
 			}
 			lastX = vertexX;
 			lastY = vertexY;
-			theta += 6 * ¹ / fillMesh.getNumVertices();
+			theta += 6 * pi / fillMesh.getNumVertices();
 		}
 		fillMesh.vertex(fillMesh.getVertices()[0], fillMesh.getVertices()[1]);
 		fillMesh.vertex(lastX, lastY);

@@ -3,7 +3,7 @@ package com.kh.beatbot.ui.mesh;
 import com.kh.beatbot.ui.Drawable;
 
 public abstract class Shape extends Drawable {
-	public static final float ¹ = (float) Math.PI;
+	public static final float pi = (float) Math.PI;
 	
 	protected ShapeGroup group;
 	protected Mesh2D fillMesh, outlineMesh;

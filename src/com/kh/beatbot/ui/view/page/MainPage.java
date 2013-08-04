@@ -55,7 +55,7 @@ public class MainPage extends Page {
 
 	@Override
 	public void handleActionMove(int id, float x, float y) {
-		character.setPosition(x, y);
+		character.moveTo(x, y);
 	}
 	
 	@Override

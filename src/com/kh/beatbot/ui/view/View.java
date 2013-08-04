@@ -17,7 +17,7 @@ import com.kh.beatbot.ui.mesh.ShapeGroup;
 
 public abstract class View implements Comparable<View> {
 
-	public static final float ¹ = (float) Math.PI, CIRCLE_RADIUS = 100;
+	public static final float pi = (float) Math.PI, CIRCLE_RADIUS = 100;
 	public static GL10 gl;
 	public static GLSurfaceViewBase root;
 	public static Typeface font;
