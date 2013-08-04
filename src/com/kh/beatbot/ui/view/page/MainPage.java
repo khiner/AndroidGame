@@ -62,4 +62,9 @@ public class MainPage extends Page {
 	public void handleActionUp(int id, float x, float y) {
 		character.drop();
 	}
+	
+	@Override
+	public void handleActionDown(int id, float x, float y) {
+		character.pickUp();
+	}
 }

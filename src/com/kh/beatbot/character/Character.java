@@ -8,10 +8,12 @@ import com.kh.beatbot.ui.view.page.Page;
 public class Character {
 	Position position;
 	Position velocity = new Position(0, 0);
-	float size, parentHeight = Page.mainPage.height;
+	float size;
+	static float parentWidth = Page.mainPage.width, parentHeight = Page.mainPage.height;
+	boolean touched = true;
 	
 	public Character(float size) {
-		this(size, new Position(0, 0));
+		this(size, new Position(parentWidth / 2, parentHeight / 2));
 	}
 
 	public Character(float size, Position position) {
@@ -20,24 +22,36 @@ public class Character {
 	}
 
 	public void applyGravity(float gravity) {
-		velocity.y *= gravity;
+		if (touched)
+			return;
+		velocity.y += gravity;
 		if (position.y + size >= parentHeight) {
-			velocity.y = 0;
+			stop();
+		} else {
+			position.add(velocity);
 		}
-		position.add(velocity);
 	}
 
 	public void setPosition(float x, float y) {
-		velocity.x = x - position.x;
-		position.x = x;
-		position.y = y;
+		long deltaTime = (System.currentTimeMillis() - position.timeInMillis) / 4;
+		velocity.set((x - position.x) / deltaTime, (y - position.y) / deltaTime);
+		position.set(x, y);
 	}
 
 	public void drop() {
-		velocity.y = 1;
+		touched = false;
+	}
+	
+	public void pickUp() {
+		touched = true;
+		stop();
 	}
 	
 	public void draw() {
 		View.drawPoint(size, Colors.VOLUME, position.x, position.y);
+	}
+	
+	private void stop() {
+		velocity.y = 0;
 	}
 }
